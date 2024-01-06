@@ -95,7 +95,7 @@ if (process.env.NODE_ENV !== "production")
 app.get("/", (req, res) =>
   res.json({
     "talawa-version": "v1",
-    status: "healthy",
+    status: "healthy redis server is running",
   })
 );
 
