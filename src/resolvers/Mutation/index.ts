@@ -9,6 +9,7 @@ import { addOrganizationImage } from "./addOrganizationImage";
 import { addUserCustomData } from "./addUserCustomData";
 import { addUserImage } from "./addUserImage";
 import { addUserToGroupChat } from "./addUserToGroupChat";
+import { addUserToFamily } from "./adminAddFamilyMember";
 import { adminRemoveEvent } from "./adminRemoveEvent";
 import { adminRemoveGroup } from "./adminRemoveGroup";
 import { assignUserTag } from "./assignUserTag";
@@ -25,6 +26,7 @@ import { createDonation } from "./createDonation";
 import { createEvent } from "./createEvent";
 import { createEventProject } from "./createEventProject";
 import { createGroupChat } from "./createGroupChat";
+import { createFamilyGroup } from "./createFamilyGroup";
 import { createMessageChat } from "./createMessageChat";
 import { createOrganization } from "./createOrganization";
 import { createPlugin } from "./createPlugin";
@@ -64,6 +66,7 @@ import { removeSampleOrganization } from "./removeSampleOrganization";
 import { removeTask } from "./removeTask";
 import { removeUserCustomData } from "./removeUserCustomData";
 import { removeUserFromGroupChat } from "./removeUserFromGroupChat";
+import { removeUserFromFamily } from "./adminRemoveFamilyMember";
 import { removeUserImage } from "./removeUserImage";
 import { removeUserTag } from "./removeUserTag";
 import { revokeRefreshTokenForUser } from "./revokeRefreshTokenForUser";
@@ -103,6 +106,7 @@ export const Mutation: MutationResolvers = {
   addUserCustomData,
   addUserImage,
   addUserToGroupChat,
+  addUserToFamily,
   adminRemoveEvent,
   adminRemoveGroup,
   assignUserTag,
@@ -120,6 +124,7 @@ export const Mutation: MutationResolvers = {
   createEvent,
   createEventProject,
   createGroupChat,
+  createFamilyGroup,
   createMessageChat,
   createOrganization,
   createPlugin,
@@ -159,6 +164,7 @@ export const Mutation: MutationResolvers = {
   removeTask,
   removeUserCustomData,
   removeUserFromGroupChat,
+  removeUserFromFamily,
   removeUserImage,
   removeUserTag,
   revokeRefreshTokenForUser,

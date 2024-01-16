@@ -74,6 +74,7 @@ const resolversComposition = {
   "Mutation.createComment": [currentUserExists()],
   "Mutation.createDirectChat": [currentUserExists()],
   "Mutation.createGroupChat": [currentUserExists()],
+  "Mutation.createFamilyGroup": [currentUserExists()],
   "Mutation.createOrganization": [currentUserExists()],
   "Mutation.likeComment": [currentUserExists()],
   "Mutation.likePost": [currentUserExists()],

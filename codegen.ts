@@ -44,6 +44,8 @@ const config: CodegenConfig = {
 
           EventProject: "../models/EventProject#InterfaceEventProject",
 
+          Family: "../models/Family#InterfaceFamily",
+
           Feedback: "../models/Feedback#InterfaceFeedback",
 
           // File: '../models/File#InterfaceFile',

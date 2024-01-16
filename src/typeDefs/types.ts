@@ -157,6 +157,12 @@ export const types = gql`
     organization: Organization!
   }
 
+  type Family {
+    _id: ID!
+    title: String
+    users: [User!]!
+  }
+
   type GroupChatMessage {
     _id: ID!
     groupChatMessageBelongsTo: GroupChat!

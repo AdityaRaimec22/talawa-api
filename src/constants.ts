@@ -131,10 +131,22 @@ export const LENGTH_VALIDATION_ERROR = {
   PARAM: "stringValidation",
 };
 
+export const FAMILY_MIN_MEMBERS_ERROR_CODE = {
+  MESSAGE: "Error: Members in the family must be more than one",
+  CODE: "membersInFamilyLessThanOne",
+  PARAM: "membersInFamilyLessThanOne",
+};
+
 export const REGEX_VALIDATION_ERROR = {
   MESSAGE: "Error: Entered value must be a valid string",
   CODE: "string.notValid",
   PARAM: "stringValidation",
+};
+
+export const FAMILY_NOT_FOUND_ERROR = {
+  MESSAGE: "Error: Family Not Found",
+  CODE: "familyNotFound",
+  PARAM: "familyNotFound",
 };
 
 export const USER_NOT_AUTHORIZED_SUPERADMIN = {

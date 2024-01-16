@@ -34,6 +34,8 @@ export const mutations = gql`
 
     addUserToGroupChat(userId: ID!, chatId: ID!): GroupChat! @auth
 
+    addUserToFamily(userId: ID!, familyId: ID!): Family! @auth
+
     adminRemoveEvent(eventId: ID!): Event! @auth
 
     adminRemoveGroup(groupId: ID!): GroupChat! @auth
@@ -74,6 +76,8 @@ export const mutations = gql`
     createEventProject(data: EventProjectInput!): EventProject! @auth
 
     createGroupChat(data: createGroupChatInput!): GroupChat! @auth
+
+    createFamilyGroup(data: createFamilyGroupInput!): Family! @auth
 
     createMessageChat(data: MessageChatInput!): MessageChat! @auth
 
@@ -175,6 +179,8 @@ export const mutations = gql`
     removeTask(id: ID!): Task @auth
 
     removeUserFromGroupChat(userId: ID!, chatId: ID!): GroupChat! @auth
+
+    removeUserFromFamily(userId: ID!, familyId: ID!): Family! @auth
 
     removeUserImage: User! @auth
 
