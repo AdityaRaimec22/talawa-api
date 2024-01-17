@@ -56,6 +56,7 @@ import { removeEvent } from "./removeEvent";
 import { removeEventAttendee } from "./removeEventAttendee";
 import { removeEventProject } from "./removeEventProject";
 import { removeGroupChat } from "./removeGroupChat";
+import { removeFamily } from "./removeFamilyGroup";
 import { removeAdvertisement } from "./removeAdvertisement";
 import { removeMember } from "./removeMember";
 import { removeOrganization } from "./removeOrganization";
@@ -154,6 +155,7 @@ export const Mutation: MutationResolvers = {
   removeEventAttendee,
   removeAdvertisement,
   removeEventProject,
+  removeFamily,
   removeGroupChat,
   removeMember,
   removeOrganization,

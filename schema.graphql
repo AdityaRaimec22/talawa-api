@@ -527,6 +527,7 @@ type Mutation {
   removeEvent(id: ID!): Event!
   removeEventAttendee(data: EventAttendeeInput!): User!
   removeEventProject(id: ID!): EventProject!
+  removeFamily(familyId: ID!): Family!
   removeGroupChat(chatId: ID!): GroupChat!
   removeMember(data: UserAndOrganizationInput!): Organization!
   removeOrganization(id: ID!): User!

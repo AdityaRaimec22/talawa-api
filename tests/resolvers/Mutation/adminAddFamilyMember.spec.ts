@@ -87,7 +87,7 @@ describe("resolver -> mutation -> addUserToFamily", () => {
   });
 
   it(`throws ConflictError if user with _id === args.userId is already a member 
-  of groupChat with _id === args.chatId`, async () => {
+  of family group with _id === args.familyId`, async () => {
     const { requestContext } = await import("../../../src/libraries");
     const spy = vi
       .spyOn(requestContext, "translate")
@@ -112,7 +112,7 @@ describe("resolver -> mutation -> addUserToFamily", () => {
     }
   });
 
-  it(`add the groupChat with _id === args.familyId and returns it`, async () => {
+  it(`add the family group with _id === args.familyId and returns it`, async () => {
     await Family.updateOne(
       {
         _id: testFamily?._id,

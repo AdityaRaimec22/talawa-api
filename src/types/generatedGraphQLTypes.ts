@@ -593,6 +593,7 @@ export type Mutation = {
   removeEvent: Event;
   removeEventAttendee: User;
   removeEventProject: EventProject;
+  removeFamily: Family;
   removeGroupChat: GroupChat;
   removeMember: Organization;
   removeOrganization: User;
@@ -933,6 +934,11 @@ export type MutationRemoveEventAttendeeArgs = {
 
 export type MutationRemoveEventProjectArgs = {
   id: Scalars['ID'];
+};
+
+
+export type MutationRemoveFamilyArgs = {
+  familyId: Scalars['ID'];
 };
 
 
@@ -2666,6 +2672,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   removeEvent?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationRemoveEventArgs, 'id'>>;
   removeEventAttendee?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationRemoveEventAttendeeArgs, 'data'>>;
   removeEventProject?: Resolver<ResolversTypes['EventProject'], ParentType, ContextType, RequireFields<MutationRemoveEventProjectArgs, 'id'>>;
+  removeFamily?: Resolver<ResolversTypes['Family'], ParentType, ContextType, RequireFields<MutationRemoveFamilyArgs, 'familyId'>>;
   removeGroupChat?: Resolver<ResolversTypes['GroupChat'], ParentType, ContextType, RequireFields<MutationRemoveGroupChatArgs, 'chatId'>>;
   removeMember?: Resolver<ResolversTypes['Organization'], ParentType, ContextType, RequireFields<MutationRemoveMemberArgs, 'data'>>;
   removeOrganization?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationRemoveOrganizationArgs, 'id'>>;

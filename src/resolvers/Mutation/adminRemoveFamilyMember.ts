@@ -41,19 +41,6 @@ export const removeUserFromFamily: MutationResolvers["removeUserFromFamily"] =
       );
     }
 
-    const userIsMemberOfFamily = family.users.some((user) => {
-      user.equals(args.userId);
-    });
-
-    // Checks if user with _id === args.userId is not a member of family.
-    if (userIsMemberOfFamily === false) {
-      throw new errors.UnauthorizedError(
-        requestContext.translate(USER_NOT_AUTHORIZED_ERROR.MESSAGE),
-        USER_NOT_AUTHORIZED_ERROR.CODE,
-        USER_NOT_AUTHORIZED_ERROR.PARAM
-      );
-    }
-
     //Removes args.userId from users list of family ans return the updated family.
     return await Family.findOneAndUpdate(
       {

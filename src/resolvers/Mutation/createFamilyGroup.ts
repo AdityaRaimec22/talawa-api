@@ -55,7 +55,7 @@ export const createFamilyGroup: MutationResolvers["createFamilyGroup"] = async (
     );
   }
 
-  const familyTitle = null;
+  const familyTitle = args.data?.title;
 
   const createdFamily = await Family.create({
     ...args.data,
