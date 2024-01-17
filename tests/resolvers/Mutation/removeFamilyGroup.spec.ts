@@ -54,34 +54,6 @@ describe("resolvers -> Mutation -> removeFamily", () => {
     vi.resetModules();
   });
 
-  it(`throws NotFoundError if no family exists with _id === args.familyId`, async () => {
-    const { requestContext } = await import("../../../src/libraries");
-    const spy = vi
-      .spyOn(requestContext, "translate")
-      .mockImplementation((message) => `Translated ${message}`);
-
-    try {
-      const args: MutationRemoveFamilyArgs = {
-        familyId: Types.ObjectId().toString(),
-      };
-
-      const context = {
-        userId: testUser?._id,
-      };
-
-      const { removeFamily: removeFamilyResolver } = await import(
-        "../../../src/resolvers/Mutation/removeFamilyGroup"
-      );
-
-      await removeFamilyResolver?.({}, args, context);
-    } catch (error: any) {
-      expect(spy).toHaveBeenCalledWith(FAMILY_NOT_FOUND_ERROR.MESSAGE);
-      expect(error.message).toEqual(
-        `Translated ${FAMILY_NOT_FOUND_ERROR.MESSAGE}`
-      );
-    }
-  });
-
   it(`throws User is not SUPERADMIN error if current user is with _id === context.userId is not a  SUPERADMIN`, async () => {
     const { requestContext } = await import("../../../src/libraries");
     const spy = vi
@@ -106,6 +78,34 @@ describe("resolvers -> Mutation -> removeFamily", () => {
       expect(spy).toHaveBeenCalledWith(USER_NOT_AUTHORIZED_SUPERADMIN.MESSAGE);
       expect(error.message).toEqual(
         `Translated ${USER_NOT_AUTHORIZED_SUPERADMIN.MESSAGE}`
+      );
+    }
+  });
+
+  it(`throws NotFoundError if no family exists with _id === args.familyId`, async () => {
+    const { requestContext } = await import("../../../src/libraries");
+    const spy = vi
+      .spyOn(requestContext, "translate")
+      .mockImplementation((message) => `Translated ${message}`);
+
+    try {
+      const args: MutationRemoveFamilyArgs = {
+        familyId: Types.ObjectId().toString(),
+      };
+
+      const context = {
+        userId: testUser?._id,
+      };
+
+      const { removeFamily: removeFamilyResolver } = await import(
+        "../../../src/resolvers/Mutation/removeFamilyGroup"
+      );
+
+      await removeFamilyResolver?.({}, args, context);
+    } catch (error: any) {
+      expect(spy).toHaveBeenCalledWith(FAMILY_NOT_FOUND_ERROR.MESSAGE);
+      expect(error.message).toEqual(
+        `Translated ${FAMILY_NOT_FOUND_ERROR.MESSAGE}`
       );
     }
   });

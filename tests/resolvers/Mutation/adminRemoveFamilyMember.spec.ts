@@ -10,6 +10,7 @@ import { removeUserFromFamily as removeUserFromFamilyResolver } from "../../../s
 import {
   FAMILY_NOT_FOUND_ERROR,
   USER_NOT_AUTHORIZED_ERROR,
+  USER_NOT_AUTHORIZED_SUPERADMIN,
 } from "../../../src/constants";
 import { beforeAll, afterAll, describe, it, expect, vi } from "vitest";
 import type { TestUserType } from "../../helpers/user";
@@ -32,6 +33,35 @@ afterAll(async () => {
 });
 
 describe("resolver -> Mutation -> removerUserFromFamily", () => {
+  it(`throws user is not SUPERADMIN error if current user is with _id === context.userId is not SUPERADMIN`, async () => {
+    const { requestContext } = await import("../../../src/libraries");
+    const spy = vi
+      .spyOn(requestContext, "translate")
+      .mockImplementation((message) => message);
+
+    try {
+      const args: MutationRemoveUserFromFamilyArgs = {
+        userId: testUser?.id,
+        familyId: testFamily?.id
+      }
+
+      const context = {
+        userId: testUser?.id
+      }
+
+      const { removeUserFromFamily } = await import(
+        "../../../src/resolvers/Mutation/adminRemoveFamilyMember"
+      );
+
+      await removeUserFromFamily?.({}, args, context);
+    } catch (error: any) {
+      expect(spy).toHaveBeenCalledWith(USER_NOT_AUTHORIZED_SUPERADMIN.MESSAGE);
+      expect(error.message).toEqual(
+        `Translated ${USER_NOT_AUTHORIZED_SUPERADMIN.MESSAGE}`
+      );
+    }
+  })
+
   it(`throws NotFoundError if no family exists with _id === args.familyId`, async () => {
     const { requestContext } = await import("../../../src/libraries");
     const spy = vi
