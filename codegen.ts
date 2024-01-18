@@ -42,6 +42,8 @@ const config: CodegenConfig = {
 
           EventAttendee: "../models/EventAttendee#InterfaceEventAttendee",
 
+          Family: "../models/Family#InterfaceFamily",
+
           Feedback: "../models/Feedback#InterfaceFeedback",
 
           // File: '../models/File#InterfaceFile',

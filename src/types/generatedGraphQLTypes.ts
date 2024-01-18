@@ -7,6 +7,7 @@ import type { InterfaceDirectChatMessage as InterfaceDirectChatMessageModel } fr
 import type { InterfaceDonation as InterfaceDonationModel } from '../models/Donation';
 import type { InterfaceEvent as InterfaceEventModel } from '../models/Event';
 import type { InterfaceEventAttendee as InterfaceEventAttendeeModel } from '../models/EventAttendee';
+import type { InterfaceFamily as InterfaceFamilyModel } from '../models/Family';
 import type { InterfaceFeedback as InterfaceFeedbackModel } from '../models/Feedback';
 import type { InterfaceGroup as InterfaceGroupModel } from '../models/Group';
 import type { InterfaceGroupChat as InterfaceGroupChatModel } from '../models/GroupChat';
@@ -366,8 +367,15 @@ export type EventWhereInput = {
 
 export type ExtendSession = {
   __typename?: 'ExtendSession';
-  accessToken: Scalars['String']['output'];
-  refreshToken: Scalars['String']['output'];
+  accessToken: Scalars['String'];
+  refreshToken: Scalars['String'];
+};
+
+export type Family = {
+  __typename?: 'Family';
+  _id: Scalars['ID'];
+  title?: Maybe<Scalars['String']>;
+  users: Array<User>;
 };
 
 export type Feedback = {
@@ -547,6 +555,7 @@ export type Mutation = {
   addOrganizationImage: Organization;
   addUserCustomData: UserCustomData;
   addUserImage: User;
+  addUserToFamily: Family;
   addUserToGroupChat: GroupChat;
   adminRemoveEvent: Event;
   adminRemoveGroup: GroupChat;
@@ -561,6 +570,7 @@ export type Mutation = {
   createDirectChat: DirectChat;
   createDonation: Donation;
   createEvent: Event;
+  createFamilyGroup: Family;
   createGroupChat: GroupChat;
   createMember: Organization;
   createMessageChat: MessageChat;
@@ -590,6 +600,7 @@ export type Mutation = {
   removeDirectChat: DirectChat;
   removeEvent: Event;
   removeEventAttendee: User;
+  removeFamily: Family;
   removeGroupChat: GroupChat;
   removeMember: Organization;
   removeOrganization: User;
@@ -598,6 +609,7 @@ export type Mutation = {
   removePost?: Maybe<Post>;
   removeSampleOrganization: Scalars['Boolean']['output'];
   removeUserCustomData: UserCustomData;
+  removeUserFromFamily: Family;
   removeUserFromGroupChat: GroupChat;
   removeUserImage: User;
   removeUserTag?: Maybe<UserTag>;
@@ -674,6 +686,12 @@ export type MutationAddUserCustomDataArgs = {
 
 export type MutationAddUserImageArgs = {
   file: Scalars['String']['input'];
+};
+
+
+export type MutationAddUserToFamilyArgs = {
+  familyId: Scalars['ID'];
+  userId: Scalars['ID'];
 };
 
 
@@ -758,6 +776,11 @@ export type MutationCreateDonationArgs = {
 
 export type MutationCreateEventArgs = {
   data?: InputMaybe<EventInput>;
+};
+
+
+export type MutationCreateFamilyGroupArgs = {
+  data: CreateFamilyGroupInput;
 };
 
 
@@ -902,6 +925,16 @@ export type MutationRemoveEventAttendeeArgs = {
 };
 
 
+export type MutationRemoveEventProjectArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationRemoveFamilyArgs = {
+  familyId: Scalars['ID'];
+};
+
+
 export type MutationRemoveGroupChatArgs = {
   chatId: Scalars['ID']['input'];
 };
@@ -929,12 +962,23 @@ export type MutationRemoveOrganizationImageArgs = {
 
 
 export type MutationRemovePostArgs = {
-  id: Scalars['ID']['input'];
+  id: Scalars['ID'];
+};
+
+
+export type MutationRemoveTaskArgs = {
+  id: Scalars['ID'];
 };
 
 
 export type MutationRemoveUserCustomDataArgs = {
-  organizationId: Scalars['ID']['input'];
+  organizationId: Scalars['ID'];
+};
+
+
+export type MutationRemoveUserFromFamilyArgs = {
+  familyId: Scalars['ID'];
+  userId: Scalars['ID'];
 };
 
 
@@ -1852,6 +1896,11 @@ export type CreateChatInput = {
   userIds: Array<Scalars['ID']['input']>;
 };
 
+export type CreateFamilyGroupInput = {
+  title: Scalars['String'];
+  userIds: Array<Scalars['ID']>;
+};
+
 export type CreateGroupChatInput = {
   organizationId: Scalars['ID']['input'];
   title: Scalars['String']['input'];
@@ -1970,6 +2019,7 @@ export type ResolversTypes = {
   EventOrderByInput: EventOrderByInput;
   EventWhereInput: EventWhereInput;
   ExtendSession: ResolverTypeWrapper<ExtendSession>;
+  Family: ResolverTypeWrapper<InterfaceFamilyModel>;
   Feedback: ResolverTypeWrapper<InterfaceFeedbackModel>;
   FeedbackInput: FeedbackInput;
   FieldError: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['FieldError']>;
@@ -2063,6 +2113,7 @@ export type ResolversTypes = {
   UsersConnectionInput: UsersConnectionInput;
   UsersConnectionResult: ResolverTypeWrapper<Omit<UsersConnectionResult, 'data' | 'errors'> & { data?: Maybe<ResolversTypes['UsersConnection']>, errors: Array<ResolversTypes['ConnectionError']> }>;
   createChatInput: CreateChatInput;
+  createFamilyGroupInput: CreateFamilyGroupInput;
   createGroupChatInput: CreateGroupChatInput;
 };
 
@@ -2100,6 +2151,7 @@ export type ResolversParentTypes = {
   EventInput: EventInput;
   EventWhereInput: EventWhereInput;
   ExtendSession: ExtendSession;
+  Family: InterfaceFamilyModel;
   Feedback: InterfaceFeedbackModel;
   FeedbackInput: FeedbackInput;
   FieldError: ResolversInterfaceTypes<ResolversParentTypes>['FieldError'];
@@ -2183,6 +2235,7 @@ export type ResolversParentTypes = {
   UsersConnectionInput: UsersConnectionInput;
   UsersConnectionResult: Omit<UsersConnectionResult, 'data' | 'errors'> & { data?: Maybe<ResolversParentTypes['UsersConnection']>, errors: Array<ResolversParentTypes['ConnectionError']> };
   createChatInput: CreateChatInput;
+  createFamilyGroupInput: CreateFamilyGroupInput;
   createGroupChatInput: CreateGroupChatInput;
 };
 
@@ -2383,6 +2436,13 @@ export type ExtendSessionResolvers<ContextType = any, ParentType extends Resolve
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type FamilyResolvers<ContextType = any, ParentType extends ResolversParentTypes['Family'] = ResolversParentTypes['Family']> = {
+  _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type FeedbackResolvers<ContextType = any, ParentType extends ResolversParentTypes['Feedback'] = ResolversParentTypes['Feedback']> = {
   _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
@@ -2531,6 +2591,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   addOrganizationImage?: Resolver<ResolversTypes['Organization'], ParentType, ContextType, RequireFields<MutationAddOrganizationImageArgs, 'file' | 'organizationId'>>;
   addUserCustomData?: Resolver<ResolversTypes['UserCustomData'], ParentType, ContextType, RequireFields<MutationAddUserCustomDataArgs, 'dataName' | 'dataValue' | 'organizationId'>>;
   addUserImage?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationAddUserImageArgs, 'file'>>;
+  addUserToFamily?: Resolver<ResolversTypes['Family'], ParentType, ContextType, RequireFields<MutationAddUserToFamilyArgs, 'familyId' | 'userId'>>;
   addUserToGroupChat?: Resolver<ResolversTypes['GroupChat'], ParentType, ContextType, RequireFields<MutationAddUserToGroupChatArgs, 'chatId' | 'userId'>>;
   adminRemoveEvent?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationAdminRemoveEventArgs, 'eventId'>>;
   adminRemoveGroup?: Resolver<ResolversTypes['GroupChat'], ParentType, ContextType, RequireFields<MutationAdminRemoveGroupArgs, 'groupId'>>;
@@ -2545,6 +2606,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   createDirectChat?: Resolver<ResolversTypes['DirectChat'], ParentType, ContextType, RequireFields<MutationCreateDirectChatArgs, 'data'>>;
   createDonation?: Resolver<ResolversTypes['Donation'], ParentType, ContextType, RequireFields<MutationCreateDonationArgs, 'amount' | 'nameOfOrg' | 'nameOfUser' | 'orgId' | 'payPalId' | 'userId'>>;
   createEvent?: Resolver<ResolversTypes['Event'], ParentType, ContextType, Partial<MutationCreateEventArgs>>;
+  createFamilyGroup?: Resolver<ResolversTypes['Family'], ParentType, ContextType, RequireFields<MutationCreateFamilyGroupArgs, 'data'>>;
   createGroupChat?: Resolver<ResolversTypes['GroupChat'], ParentType, ContextType, RequireFields<MutationCreateGroupChatArgs, 'data'>>;
   createMember?: Resolver<ResolversTypes['Organization'], ParentType, ContextType, RequireFields<MutationCreateMemberArgs, 'input'>>;
   createMessageChat?: Resolver<ResolversTypes['MessageChat'], ParentType, ContextType, RequireFields<MutationCreateMessageChatArgs, 'data'>>;
@@ -2574,6 +2636,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   removeDirectChat?: Resolver<ResolversTypes['DirectChat'], ParentType, ContextType, RequireFields<MutationRemoveDirectChatArgs, 'chatId' | 'organizationId'>>;
   removeEvent?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationRemoveEventArgs, 'id'>>;
   removeEventAttendee?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationRemoveEventAttendeeArgs, 'data'>>;
+  removeFamily?: Resolver<ResolversTypes['Family'], ParentType, ContextType, RequireFields<MutationRemoveFamilyArgs, 'familyId'>>;
   removeGroupChat?: Resolver<ResolversTypes['GroupChat'], ParentType, ContextType, RequireFields<MutationRemoveGroupChatArgs, 'chatId'>>;
   removeMember?: Resolver<ResolversTypes['Organization'], ParentType, ContextType, RequireFields<MutationRemoveMemberArgs, 'data'>>;
   removeOrganization?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationRemoveOrganizationArgs, 'id'>>;
@@ -2582,6 +2645,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   removePost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationRemovePostArgs, 'id'>>;
   removeSampleOrganization?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   removeUserCustomData?: Resolver<ResolversTypes['UserCustomData'], ParentType, ContextType, RequireFields<MutationRemoveUserCustomDataArgs, 'organizationId'>>;
+  removeUserFromFamily?: Resolver<ResolversTypes['Family'], ParentType, ContextType, RequireFields<MutationRemoveUserFromFamilyArgs, 'familyId' | 'userId'>>;
   removeUserFromGroupChat?: Resolver<ResolversTypes['GroupChat'], ParentType, ContextType, RequireFields<MutationRemoveUserFromGroupChatArgs, 'chatId' | 'userId'>>;
   removeUserImage?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   removeUserTag?: Resolver<Maybe<ResolversTypes['UserTag']>, ParentType, ContextType, RequireFields<MutationRemoveUserTagArgs, 'id'>>;
@@ -2918,6 +2982,7 @@ export type Resolvers<ContextType = any> = {
   Error?: ErrorResolvers<ContextType>;
   Event?: EventResolvers<ContextType>;
   ExtendSession?: ExtendSessionResolvers<ContextType>;
+  Family?: FamilyResolvers<ContextType>;
   Feedback?: FeedbackResolvers<ContextType>;
   FieldError?: FieldErrorResolvers<ContextType>;
   Group?: GroupResolvers<ContextType>;

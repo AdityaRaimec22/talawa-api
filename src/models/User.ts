@@ -5,6 +5,7 @@ import validator from "validator";
 import type { InterfaceEvent } from "./Event";
 import type { InterfaceMembershipRequest } from "./MembershipRequest";
 import type { InterfaceOrganization } from "./Organization";
+import type { InterfaceFamily } from "./Family";
 /**
  * This is an interface that represents a database(MongoDB) document for User.
  */
@@ -35,6 +36,7 @@ export interface InterfaceUser {
   gender: string;
   image: string | undefined | null;
   joinedOrganizations: PopulatedDoc<InterfaceOrganization & Document>[];
+  Family: PopulatedDoc<InterfaceFamily & Document> | null;
   lastName: string;
   maritalStatus: string;
   membershipRequests: PopulatedDoc<InterfaceMembershipRequest & Document>[];
@@ -131,6 +133,10 @@ const userSchema = new Schema(
     birthDate: {
       type: Date,
     },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
     createdOrganizations: [
       {
         type: Schema.Types.ObjectId,
@@ -197,6 +203,10 @@ const userSchema = new Schema(
         ref: "Organization",
       },
     ],
+    Family: {
+      type: Schema.Types.ObjectId,
+      ref: "Family",
+    },
     lastName: {
       type: String,
       required: true,
@@ -225,6 +235,10 @@ const userSchema = new Schema(
         ref: "Organization",
       },
     ],
+    organizationUserBelongsTo: {
+      type: Schema.Types.ObjectId,
+      ref: "Organization",
+    },
     password: {
       type: String,
       required: true,
@@ -263,7 +277,6 @@ const userSchema = new Schema(
     },
     tokenVersion: {
       type: Number,
-      required: true,
       default: 0,
     },
     userType: {
