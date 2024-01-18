@@ -74,8 +74,6 @@ const config: CodegenConfig = {
 
           Post: "../models/Post#InterfacePost",
 
-          Task: "../models/Task#InterfaceTask",
-
           UserTag: "../models/OrganizationTagUser#InterfaceOrganizationTagUser",
 
           User: "../models/User#InterfaceUser",
