@@ -36,15 +36,10 @@ export const isAuth = (request: Request): InterfaceAuthData => {
 
   // format of request sent will be Bearer tokenvalue
   // this splits it into two values bearer and the token
-  const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlblZlcnNpb24iOjE3OCwidXNlcklkIjoiNjQzNzhhYmQ4NTAwOGYxNzFjZjI5OTBkIiwiZmlyc3ROYW1lIjoiV2lsdCIsImxhc3ROYW1lIjoiU2hlcGhlcmQiLCJlbWFpbCI6InRlc3RzdXBlcmFkbWluQGV4YW1wbGUuY29tIiwiaWF0IjoxNzA1NDc2MDk4LCJleHAiOjE3MDU0Nzg0OTh9.Hp8rwhG0GYMbF9l0O5JBEMhVUpmh2WeyjJBiM_ESANQ`;
-
-  // authHeader.split(" ")[1];
-
-  // `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlblZlcnNpb24iOjUsInVzZXJJZCI6IjY0Mzc4YWJkODUwMDhmMTcxY2YyOTkwZCIsImZpcnN0TmFtZSI6IldpbHQiLCJsYXN0TmFtZSI6IlNoZXBoZXJkIiwiZW1haWwiOiJ0ZXN0c3VwZXJhZG1pbkBleGFtcGxlLmNvbSIsImlhdCI6MTcwNTQ2NzMxOCwiZXhwIjoxNzA1NDY5NzE4fQ.8T96ES90TEoe9XkjDkRmzpsmC9vd_Vie2yLzV1uRx7w`;
-  //
+  const token = authHeader.split(" ")[1];
 
   // if the token is null or an empty string
-  if (!token) {
+  if (!token || token === "") {
     return authData;
   }
 
