@@ -60,7 +60,7 @@ describe("resolver -> mutation -> addUserToFamily", () => {
     } catch (error: any) {
       expect(spy).toHaveBeenCalledWith(USER_NOT_AUTHORIZED_SUPERADMIN.MESSAGE);
       expect(error.message).toEqual(
-        `Translated ${USER_NOT_AUTHORIZED_SUPERADMIN.MESSAGE}`
+        `${USER_NOT_AUTHORIZED_SUPERADMIN.MESSAGE}`
       );
     }
   })
