@@ -34,8 +34,8 @@ export const createFamilyGroup: MutationResolvers["createFamilyGroup"] = async (
     isLessThanMaxLength: false,
   };
 
-  if (args.data?.title) {
-    ValidationResultName = isValidString(args.data?.title, 256);
+  if (args && args.data && typeof args.data.title === 'string') {
+    ValidationResultName = isValidString(args.data.title, 256);
   }
 
   if (!ValidationResultName.isLessThanMaxLength) {

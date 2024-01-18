@@ -72,7 +72,7 @@ describe("resolver -> mutation -> addUserToFamily", () => {
       .mockImplementation((message) => message);
     try {
       const args: MutationAddUserToFamilyArgs = {
-        familyId: Types.ObjectId().toString(),
+        familyId: { input: Types.ObjectId().toString(), output: "" },
         userId: testUser?.id,
       };
 
@@ -98,7 +98,7 @@ describe("resolver -> mutation -> addUserToFamily", () => {
     try {
       const args: MutationAddUserToFamilyArgs = {
         familyId: testFamily?._id,
-        userId: Types.ObjectId().toString(),
+        userId: { input: Types.ObjectId().toString(), output: "" },
       };
 
       const context = {

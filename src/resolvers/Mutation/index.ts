@@ -146,7 +146,6 @@ export const Mutation: MutationResolvers = {
   removeEvent,
   removeEventAttendee,
   removeAdvertisement,
-  removeEventProject,
   removeFamily,
   removeGroupChat,
   removeMember,
