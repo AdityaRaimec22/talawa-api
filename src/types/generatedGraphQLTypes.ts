@@ -625,7 +625,6 @@ export type Mutation = {
   unlikeComment?: Maybe<Comment>;
   unlikePost?: Maybe<Post>;
   unregisterForEventByUser: Event;
-  updateAdvertisement?: Maybe<UpdateAdvertisementPayload>;
   updateEvent: Event;
   updateLanguage: User;
   updateOrganization: Organization;
