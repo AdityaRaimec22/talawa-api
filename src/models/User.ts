@@ -53,6 +53,7 @@ export interface InterfaceUser {
   token: string | undefined;
   tokenVersion: number;
   updatedAt: Date;
+  updatedAt: Date;
   userType: string;
 }
 /**
@@ -133,10 +134,6 @@ const userSchema = new Schema(
     birthDate: {
       type: Date,
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
     createdOrganizations: [
       {
         type: Schema.Types.ObjectId,
@@ -203,10 +200,6 @@ const userSchema = new Schema(
         ref: "Organization",
       },
     ],
-    Family: {
-      type: Schema.Types.ObjectId,
-      ref: "Family",
-    },
     lastName: {
       type: String,
       required: true,
@@ -235,10 +228,6 @@ const userSchema = new Schema(
         ref: "Organization",
       },
     ],
-    organizationUserBelongsTo: {
-      type: Schema.Types.ObjectId,
-      ref: "Organization",
-    },
     password: {
       type: String,
       required: true,
@@ -277,12 +266,13 @@ const userSchema = new Schema(
     },
     tokenVersion: {
       type: Number,
+      required: true,
       default: 0,
     },
     userType: {
       type: String,
       required: true,
-      enum: ["USER", "ADMIN", "SUPERADMIN"],
+      enum: ["USER", "ADMIN", "SUPERADMIN", "NON_USER"],
       default: "USER",
     },
   },

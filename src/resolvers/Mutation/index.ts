@@ -180,4 +180,5 @@ export const Mutation: MutationResolvers = {
   updateUserType,
   updateUserTag,
   updatePost,
+  updateAdvertisement,
 };
