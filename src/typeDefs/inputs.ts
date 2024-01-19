@@ -29,6 +29,11 @@ export const inputs = gql`
     title: String!
   }
 
+  input createFamilyGroupInput {
+    title: String!
+    userIds: [ID!]!
+  }
+
   input CreateUserTagInput {
     name: String!
     parentTagId: ID
