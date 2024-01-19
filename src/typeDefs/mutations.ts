@@ -34,6 +34,8 @@ export const mutations = gql`
 
     addUserToGroupChat(userId: ID!, chatId: ID!): GroupChat! @auth
 
+    addUserToFamily(userId: ID!, familyId: ID!): Family! @auth
+
     adminRemoveEvent(eventId: ID!): Event! @auth
 
     adminRemoveGroup(groupId: ID!): GroupChat! @auth
@@ -71,9 +73,9 @@ export const mutations = gql`
 
     createEvent(data: EventInput): Event! @auth
 
-    createEventProject(data: EventProjectInput!): EventProject! @auth
-
     createGroupChat(data: createGroupChatInput!): GroupChat! @auth
+
+    createFamilyGroup(data: createFamilyGroupInput!): Family! @auth
 
     createMessageChat(data: MessageChatInput!): MessageChat! @auth
 
@@ -102,8 +104,6 @@ export const mutations = gql`
     createUserTag(input: CreateUserTagInput!): UserTag @auth
 
     createSampleOrganization: Boolean! @auth
-
-    createTask(data: TaskInput!, eventProjectId: ID!): Task! @auth
 
     deleteAdvertisementById(id: ID!): DeletePayload!
 
@@ -152,7 +152,7 @@ export const mutations = gql`
 
     removeEventAttendee(data: EventAttendeeInput!): User! @auth
 
-    removeEventProject(id: ID!): EventProject! @auth
+    removeFamily(familyId: ID!): Family! @auth
 
     removeGroupChat(chatId: ID!): GroupChat! @auth
 
@@ -172,9 +172,9 @@ export const mutations = gql`
 
     removeSampleOrganization: Boolean! @auth
 
-    removeTask(id: ID!): Task @auth
-
     removeUserFromGroupChat(userId: ID!, chatId: ID!): GroupChat! @auth
+
+    removeUserFromFamily(userId: ID!, familyId: ID!): Family! @auth
 
     removeUserImage: User! @auth
 
@@ -194,8 +194,6 @@ export const mutations = gql`
       messageContent: String!
     ): GroupChatMessage! @auth
 
-    setTaskVolunteers(id: ID!, volunteers: [ID]!): Task @auth
-
     signUp(data: UserInput!, file: String): AuthData!
 
     togglePostPin(id: ID!): Post! @auth
@@ -210,10 +208,11 @@ export const mutations = gql`
 
     unregisterForEventByUser(id: ID!): Event! @auth
 
-    updateEvent(id: ID!, data: UpdateEventInput): Event! @auth
+    updateAdvertisement(
+      input: UpdateAdvertisementInput!
+    ): UpdateAdvertisementPayload @auth
 
-    updateEventProject(id: ID!, data: UpdateEventProjectInput!): EventProject!
-      @auth
+    updateEvent(id: ID!, data: UpdateEventInput): Event! @auth
 
     updatePost(id: ID!, data: PostUpdateInput): Post! @auth
 
@@ -228,8 +227,6 @@ export const mutations = gql`
     updatePluginStatus(id: ID!, orgId: ID!): Plugin!
 
     updateUserTag(input: UpdateUserTagInput!): UserTag @auth
-
-    updateTask(id: ID!, data: UpdateTaskInput!): Task @auth
 
     updateUserProfile(data: UpdateUserInput, file: String): User! @auth
 

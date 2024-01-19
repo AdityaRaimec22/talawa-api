@@ -26,12 +26,6 @@ export const EVENT_NOT_FOUND_ERROR = {
   MESSAGE: "event.notFound",
   PARAM: "event",
 };
-export const EVENT_PROJECT_NOT_FOUND_ERROR = {
-  DESC: "EventProject not found",
-  CODE: "eventProject.notFound",
-  MESSAGE: "eventProject.notFound",
-  PARAM: "eventProject",
-};
 
 export const FEEDBACK_ALREADY_SUBMITTED = {
   MESSAGE: "The user has already submitted a feedback for this event.",
@@ -81,6 +75,12 @@ export const ORGANIZATION_IMAGE_NOT_FOUND_ERROR = {
   MESSAGE: "organizationImage.notFound",
   PARAM: "organizationImage",
 };
+export const PLUGIN_NOT_FOUND = {
+  DESC: "Plugin not found",
+  CODE: "plugin.notFound",
+  MESSAGE: "plugin.notFound",
+  PARAM: "plugin",
+};
 export const POST_NOT_FOUND_ERROR = {
   DESC: "Post not found",
   CODE: "post.notFound",
@@ -125,16 +125,47 @@ export const UNAUTHENTICATED_ERROR = {
   PARAM: "userAuthentication",
 };
 
+export const END_DATE_VALIDATION_ERROR = {
+  MESSAGE: "Error: End date must be greater than or equal to start date.",
+  CODE: "enddate.notvalid",
+  PARAM: "dateValidation",
+};
+
+export const START_DATE_VALIDATION_ERROR = {
+  MESSAGE: "Error: Start date must be greater than or equal to current date.",
+  CODE: "startdate.notvalid",
+  PARAM: "dateValidation",
+};
+
+export const FIELD_NON_EMPTY_ERROR = {
+  MESSAGE:
+    "Error: Field cannot be null, an empty string, or contain only spaces.",
+  CODE: "field_non_empty_error",
+  PARAM: "field",
+};
+
 export const LENGTH_VALIDATION_ERROR = {
   MESSAGE: "Error: Length must be greater than 0 and less than",
   CODE: "string.notValid",
   PARAM: "stringValidation",
 };
 
+export const FAMILY_MIN_MEMBERS_ERROR_CODE = {
+  MESSAGE: "Error: Members in the family must be more than one",
+  CODE: "membersInFamilyLessThanOne",
+  PARAM: "membersInFamilyLessThanOne",
+};
+
 export const REGEX_VALIDATION_ERROR = {
   MESSAGE: "Error: Entered value must be a valid string",
   CODE: "string.notValid",
   PARAM: "stringValidation",
+};
+
+export const FAMILY_NOT_FOUND_ERROR = {
+  MESSAGE: "Error: Family Not Found",
+  CODE: "familyNotFound",
+  PARAM: "familyNotFound",
 };
 
 export const USER_NOT_AUTHORIZED_SUPERADMIN = {
@@ -279,16 +310,15 @@ export const USER_DOES_NOT_HAVE_THE_TAG = {
   PARAM: "user.doesNotHaveTag",
 };
 
-export const TASK_NOT_FOUND_ERROR = {
-  DESC: "Task not found",
-  CODE: "task.notFound",
-  MESSAGE: "task.notFound",
-  PARAM: "task",
-};
 export const ADVERTISEMENT_NOT_FOUND_ERROR = {
   DESC: "Advertisement not found",
   CODE: "advertisement.notFound",
   MESSAGE: "advertisement.notFound",
+  PARAM: "advertisement",
+};
+export const INPUT_NOT_FOUND_ERROR = {
+  MESSAGE: "Input not found",
+  CODE: "Input.required",
   PARAM: "advertisement",
 };
 export const STATUS_ACTIVE = "ACTIVE";
