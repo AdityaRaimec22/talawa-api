@@ -64,7 +64,9 @@ jobs:
         run: npx eslint ${CHANGED_FILES} 
 
       - name: Check for formatting errors
-        run: npm run format:check
+        env:
+          CHANGED_FILES: ${{ steps.changed_files.outputs.all_changed_files }}
+        run: npm run format:check ${CHANGED_FILES}
 
       - name: Run Typescript Type-Checker
         run: npm run typecheck
