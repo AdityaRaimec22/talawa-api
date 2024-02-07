@@ -14,7 +14,6 @@ import { beforeAll, afterAll, describe, it, expect, vi } from "vitest";
 import type { TestUserType } from "../../helpers/userAndUserFamily";
 import { createTestUserFunc } from "../../helpers/userAndUserFamily";
 import { createTestUserFunc as createTestUser } from "../../helpers/user";
-import { User } from "../../../src/models";
 
 let testUser: TestUserType;
 let testUser2: TestUserType;
@@ -57,9 +56,9 @@ describe("resolvers -> Mutation -> createUserFamily", () => {
       );
 
       await createUserFamilyResolver?.({}, args, context);
-    } catch (error: any) {
+    } catch (error) {
       expect(spy).toHaveBeenCalledWith(USER_NOT_FOUND_ERROR.MESSAGE);
-      expect(error.message).toEqual(
+      expect(error).toEqual(
         `Translated ${USER_NOT_FOUND_ERROR.MESSAGE}`,
       );
     }
@@ -87,9 +86,9 @@ describe("resolvers -> Mutation -> createUserFamily", () => {
       );
 
       await createUserFamilyResolver?.({}, args, context);
-    } catch (error: any) {
+    } catch (error) {
       expect(spy).toHaveBeenCalledWith(USER_NOT_AUTHORIZED_SUPERADMIN.MESSAGE);
-      expect(error.message).toEqual(
+      expect(error).toEqual(
         `${USER_NOT_AUTHORIZED_SUPERADMIN.MESSAGE}`,
       );
     }
@@ -117,11 +116,11 @@ describe("resolvers -> Mutation -> createUserFamily", () => {
       );
 
       await createUserFamilyResolver?.({}, args, context);
-    } catch (error: any) {
+    } catch (error) {
       expect(spy).toHaveBeenCalledWith(
         `${LENGTH_VALIDATION_ERROR.MESSAGE} 256 characters in name`,
       );
-      expect(error.message).toEqual(
+      expect(error).toEqual(
         `${LENGTH_VALIDATION_ERROR.MESSAGE} 256 characters in name`,
       );
     }
@@ -149,11 +148,11 @@ describe("resolvers -> Mutation -> createUserFamily", () => {
       );
 
       await createUserFamilyResolver?.({}, args, context);
-    } catch (error: any) {
+    } catch (error) {
       expect(spy).toHaveBeenCalledWith(
         USER_FAMILY_MIN_MEMBERS_ERROR_CODE.MESSAGE,
       );
-      expect(error.code).toEqual(USER_FAMILY_MIN_MEMBERS_ERROR_CODE.MESSAGE);
+      expect(error).toEqual(USER_FAMILY_MIN_MEMBERS_ERROR_CODE.MESSAGE);
     }
   });
 

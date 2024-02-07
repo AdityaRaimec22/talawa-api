@@ -58,9 +58,9 @@ describe("resolver -> mutation -> addUserToUserFamily", () => {
         "../../../src/resolvers/Mutation/addUserToUserFamily"
       );
       await addUserToUserFamily?.({}, args, context);
-    } catch (error: any) {
+    } catch (error) {
       expect(spy).toBeCalledWith(USER_FAMILY_NOT_FOUND_ERROR.MESSAGE);
-      expect(error.message).toEqual(USER_FAMILY_NOT_FOUND_ERROR.MESSAGE);
+      expect(error).toEqual(USER_FAMILY_NOT_FOUND_ERROR.MESSAGE);
     }
   });
 
@@ -83,9 +83,9 @@ describe("resolver -> mutation -> addUserToUserFamily", () => {
         "../../../src/resolvers/Mutation/addUserToUserFamily"
       );
       await addUserToUserFamily?.({}, args, context);
-    } catch (error: any) {
+    } catch (error) {
       expect(spy).toBeCalledWith(USER_NOT_FOUND_ERROR.MESSAGE);
-      expect(error.message).toEqual(USER_NOT_FOUND_ERROR.MESSAGE);
+      expect(error).toEqual(USER_NOT_FOUND_ERROR.MESSAGE);
     }
   });
 
@@ -109,9 +109,9 @@ describe("resolver -> mutation -> addUserToUserFamily", () => {
         "../../../src/resolvers/Mutation/addUserToUserFamily"
       );
       await addUserToUserFamily?.({}, args, context);
-    } catch (error: any) {
+    } catch (error) {
       expect(spy).toBeCalledWith(USER_ALREADY_MEMBER_ERROR.MESSAGE);
-      expect(error.message).toEqual(USER_ALREADY_MEMBER_ERROR.MESSAGE);
+      expect(error).toEqual(USER_ALREADY_MEMBER_ERROR.MESSAGE);
     }
   });
 

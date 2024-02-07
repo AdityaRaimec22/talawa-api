@@ -41,15 +41,15 @@ export const createUserFamily: MutationResolvers["createUserFamily"] = async (
   // Check whether the user is super admin.
   superAdminCheck(currentUser);
 
-  let ValidationResultName = {
+  let ValidationResultname = {
     isLessThanMaxLength: false,
   };
 
   if (args && args.data && typeof args.data.title === "string") {
-    ValidationResultName = isValidString(args.data.title, 256);
+    ValidationResultname = isValidString(args.data.title, 256);
   }
 
-  if (!ValidationResultName.isLessThanMaxLength) {
+  if (!ValidationResultname.isLessThanMaxLength) {
     throw new errors.InputValidationError(
       requestContext.translate(
         `${LENGTH_VALIDATION_ERROR.MESSAGE} 256 characters in name`,

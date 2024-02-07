@@ -2,13 +2,11 @@ import "dotenv/config";
 import type mongoose from "mongoose";
 import { Types } from "mongoose";
 import { UserFamily } from "../../../src/models/userFamily";
-import { removeUserFamily as removeUserFamilyResolver } from "../../../src/resolvers/Mutation/removeUserFamily";
 import type { MutationRemoveUserFamilyArgs } from "../../../src/types/generatedGraphQLTypes";
 import { connect, disconnect } from "../../helpers/db";
 
 import {
   USER_FAMILY_NOT_FOUND_ERROR,
-  USER_NOT_AUTHORIZED_SUPERADMIN,
   USER_NOT_FOUND_ERROR,
 } from "../../../src/constants";
 import {
@@ -77,9 +75,9 @@ describe("resolvers -> Mutation -> removeUserFamily", () => {
       );
 
       await removeUserFamilyResolver?.({}, args, context);
-    } catch (error: any) {
+    } catch (error) {
       expect(spy).toHaveBeenCalledWith(USER_NOT_FOUND_ERROR.MESSAGE);
-      expect(error.message).toEqual(
+      expect(error).toEqual(
         `Translated ${USER_NOT_FOUND_ERROR.MESSAGE}`,
       );
     }
@@ -105,9 +103,9 @@ describe("resolvers -> Mutation -> removeUserFamily", () => {
       );
 
       await removeUserFamilyResolver?.({}, args, context);
-    } catch (error: any) {
+    } catch (error) {
       expect(spy).toHaveBeenCalledWith(USER_FAMILY_NOT_FOUND_ERROR.MESSAGE);
-      expect(error.message).toEqual(
+      expect(error).toEqual(
         `Translated ${USER_FAMILY_NOT_FOUND_ERROR.MESSAGE}`,
       );
     }
@@ -133,9 +131,9 @@ describe("resolvers -> Mutation -> removeUserFamily", () => {
       );
 
       await removeUserFamilyResolver?.({}, args, context);
-    } catch (error: any) {
+    } catch (error) {
       expect(spy).toHaveBeenCalledWith(USER_FAMILY_NOT_FOUND_ERROR.MESSAGE);
-      expect(error.message).toEqual(`${USER_FAMILY_NOT_FOUND_ERROR.MESSAGE}`);
+      expect(error).toEqual(`${USER_FAMILY_NOT_FOUND_ERROR.MESSAGE}`);
     }
   });
 });

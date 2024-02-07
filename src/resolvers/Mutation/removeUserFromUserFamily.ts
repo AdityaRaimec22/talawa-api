@@ -75,7 +75,7 @@ export const removeUserFromUserFamily: MutationResolvers["removeUserFromUserFami
     }
 
     // Check if the current user is removing self
-    if (user!._id.equals(currentUser?._id)) {
+    if (user._id.equals(currentUser?._id)) {
       throw new errors.ConflictError(
         requestContext.translate(USER_REMOVING_SELF.MESSAGE),
         USER_REMOVING_SELF.CODE,
@@ -102,7 +102,7 @@ export const removeUserFromUserFamily: MutationResolvers["removeUserFromUserFami
         of userFamily. If match is true assigns error message to errors list
         and breaks out of loop.
       */
-    if (Types.ObjectId(userFamily.creator.toString()).equals(user!._id)) {
+    if (Types.ObjectId(userFamily.creator.toString()).equals(user._id)) {
       throw new errors.UnauthorizedError(
         requestContext.translate(ADMIN_REMOVING_CREATOR.MESSAGE),
         ADMIN_REMOVING_CREATOR.CODE,

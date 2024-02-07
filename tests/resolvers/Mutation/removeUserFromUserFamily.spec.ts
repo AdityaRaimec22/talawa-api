@@ -1,16 +1,13 @@
 import "dotenv/config";
 import type mongoose from "mongoose";
 import { Types } from "mongoose";
-import { User } from "../../../src/models";
 import { UserFamily } from "../../../src/models/userFamily";
 import type { MutationRemoveUserFromUserFamilyArgs } from "../../../src/types/generatedGraphQLTypes";
 import { connect, disconnect } from "../../helpers/db";
 
 import {
-  ADMIN_REMOVING_ADMIN,
   ADMIN_REMOVING_CREATOR,
   USER_FAMILY_NOT_FOUND_ERROR,
-  USER_NOT_AUTHORIZED_ERROR,
   USER_NOT_FOUND_ERROR,
   USER_REMOVING_SELF,
 } from "../../../src/constants";
@@ -72,9 +69,9 @@ describe("resolver -> Mutation -> removerUserFromUserFamily", () => {
         );
 
       await removeUserFromUserFamilyResolver?.({}, args, context);
-    } catch (error: any) {
+    } catch (error) {
       expect(spy).toHaveBeenCalledWith(USER_NOT_FOUND_ERROR.MESSAGE);
-      expect(error.message).toEqual(
+      expect(error).toEqual(
         `Translated ${USER_NOT_FOUND_ERROR.MESSAGE}`,
       );
     }
@@ -101,9 +98,9 @@ describe("resolver -> Mutation -> removerUserFromUserFamily", () => {
         );
 
       await removeUserFromUserFamilyResolver?.({}, args, context);
-    } catch (error: any) {
+    } catch (error) {
       expect(spy).toBeCalledWith(USER_FAMILY_NOT_FOUND_ERROR.MESSAGE);
-      expect(error.message).toEqual(USER_FAMILY_NOT_FOUND_ERROR.MESSAGE);
+      expect(error).toEqual(USER_FAMILY_NOT_FOUND_ERROR.MESSAGE);
     }
   });
 
@@ -129,9 +126,9 @@ describe("resolver -> Mutation -> removerUserFromUserFamily", () => {
         );
 
       await removeUserFromUserFamilyResolver?.({}, args, context);
-    } catch (error: any) {
+    } catch (error) {
       expect(spy).toBeCalledWith(USER_NOT_FOUND_ERROR.MESSAGE);
-      expect(error.message).toEqual(USER_NOT_FOUND_ERROR.MESSAGE);
+      expect(error).toEqual(USER_NOT_FOUND_ERROR.MESSAGE);
     }
   });
 
@@ -156,9 +153,9 @@ describe("resolver -> Mutation -> removerUserFromUserFamily", () => {
         );
 
       await removeUserFromUserFamilyResolver?.({}, args, context);
-    } catch (error: any) {
+    } catch (error) {
       expect(spy).toHaveBeenCalledWith(USER_NOT_FOUND_ERROR.MESSAGE);
-      expect(error.message).toEqual(
+      expect(error).toEqual(
         `Translated ${USER_NOT_FOUND_ERROR.MESSAGE}`,
       );
     }
@@ -185,9 +182,9 @@ describe("resolver -> Mutation -> removerUserFromUserFamily", () => {
         );
 
       await removeUserFromUserFamilyResolver?.({}, args, context);
-    } catch (error: any) {
+    } catch (error) {
       expect(spy).toHaveBeenCalledWith(USER_REMOVING_SELF.MESSAGE);
-      expect(error.message).toEqual(`Translated ${USER_REMOVING_SELF.MESSAGE}`);
+      expect(error).toEqual(`Translated ${USER_REMOVING_SELF.MESSAGE}`);
     }
   });
 
@@ -212,9 +209,9 @@ describe("resolver -> Mutation -> removerUserFromUserFamily", () => {
         );
 
       await removeUserFromUserFamilyResolver?.({}, args, context);
-    } catch (error: any) {
+    } catch (error) {
       expect(spy).toHaveBeenCalledWith(USER_NOT_FOUND_ERROR.MESSAGE);
-      expect(error.message).toEqual(
+      expect(error).toEqual(
         `Translated ${USER_NOT_FOUND_ERROR.MESSAGE}`,
       );
     }
@@ -241,9 +238,9 @@ describe("resolver -> Mutation -> removerUserFromUserFamily", () => {
         );
 
       await removeUserFromUserFamilyResolver?.({}, args, context);
-    } catch (error: any) {
+    } catch (error) {
       expect(spy).toHaveBeenCalledWith(ADMIN_REMOVING_CREATOR.MESSAGE);
-      expect(error.message).toEqual(
+      expect(error).toEqual(
         `Translated ${ADMIN_REMOVING_CREATOR.MESSAGE}`,
       );
     }
@@ -276,9 +273,9 @@ describe("resolver -> Mutation -> removerUserFromUserFamily", () => {
       );
 
       expect(updatedUserFamily?.users).not.toContain(testUsers[4]?._id);
-    } catch (error: any) {
+    } catch (error) {
       expect(spy).toHaveBeenCalledWith(USER_NOT_FOUND_ERROR.MESSAGE);
-      expect(error.message).toEqual(
+      expect(error).toEqual(
         `Translated ${USER_NOT_FOUND_ERROR.MESSAGE}`,
       );
     }

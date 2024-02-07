@@ -71,9 +71,9 @@ describe("resolvers -> UserFamily -> creator", () => {
       if (parent) {
         await creatorResolver?.(parent, {}, {});
       }
-    } catch (error: any) {
+    } catch (error) {
       expect(spy).toHaveBeenCalledWith(USER_NOT_FOUND_ERROR.MESSAGE);
-      expect(error.message).toEqual(
+      expect(error).toEqual(
         `Translated ${USER_NOT_FOUND_ERROR.MESSAGE}`
       );
     }

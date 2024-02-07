@@ -22,7 +22,7 @@ export interface InterfaceUserFamily {
  * @param  users - Members associated with the user Family (type: String)
  * Description: Members associated with the user Family.
  */
-const UserFamilySchema = new Schema({
+const UserFamilyschema = new Schema({
   title: {
     type: String,
     required: true,
@@ -49,7 +49,7 @@ const UserFamilySchema = new Schema({
 });
 
 const userFamilyModel = (): Model<InterfaceUserFamily> =>
-  model<InterfaceUserFamily>("UserFamily", UserFamilySchema);
+  model<InterfaceUserFamily>("UserFamily", UserFamilyschema);
 
 // This syntax is needed to prevent Mongoose OverwriteModelError while running tests.
 export const UserFamily = (models.UserFamily ||
