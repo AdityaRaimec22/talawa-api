@@ -21,11 +21,12 @@ import {
   vi,
 } from "vitest";
 import {
-  createTestUserFunc,
-  type TestUserType,
-} from "../../helpers/userAndUserFamily";
-import type { TestUserFamilyType } from "../../helpers/userAndUserFamily";
-import { User } from "../../../src/models";
+  createTestUserFunc} from "../../helpers/userAndUserFamily";
+import type {
+ TestUserFamilyType ,
+  TestUserType } from "../../helpers/userAndUserFamily";
+
+
 
 let MONGOOSE_INSTANCE: typeof mongoose;
 let testUsers: TestUserType[];
@@ -43,30 +44,6 @@ beforeAll(async () => {
     creator: tempUser1,
     users: [tempUser1, tempUser2],
   });
-
-  await User.updateOne(
-    {
-      _id: testUsers[0]?._id,
-    },
-    {
-      $set: {
-        createdUserFamily: [testUserFamily._id],
-        adminForUserFamily: [testUserFamily._id],
-        joinedUserFamily: [testUserFamily._id],
-      },
-    }
-  );
-
-  await User.updateOne(
-    {
-      _id: testUsers[1]?._id,
-    },
-    {
-      $set: {
-        joinedUserFamily: [testUserFamily._id],
-      },
-    }
-  );
 });
 
 afterAll(async () => {
@@ -103,7 +80,7 @@ describe("resolvers -> Mutation -> removeUserFamily", () => {
     } catch (error: any) {
       expect(spy).toHaveBeenCalledWith(USER_NOT_FOUND_ERROR.MESSAGE);
       expect(error.message).toEqual(
-        `Translated ${USER_NOT_FOUND_ERROR.MESSAGE}`
+        `Translated ${USER_NOT_FOUND_ERROR.MESSAGE}`,
       );
     }
   });
@@ -131,7 +108,7 @@ describe("resolvers -> Mutation -> removeUserFamily", () => {
     } catch (error: any) {
       expect(spy).toHaveBeenCalledWith(USER_FAMILY_NOT_FOUND_ERROR.MESSAGE);
       expect(error.message).toEqual(
-        `Translated ${USER_FAMILY_NOT_FOUND_ERROR.MESSAGE}`
+        `Translated ${USER_FAMILY_NOT_FOUND_ERROR.MESSAGE}`,
       );
     }
   });

@@ -27,10 +27,6 @@ beforeAll(async () => {
 
   testUser = resultsArray;
   testUser2 = secondUser;
-  // const { requestContext } = await import("../../../src/libraries");
-  // vi.spyOn(requestContext, "translate").mockImplementation(
-  //   (message) => message
-  // );
 });
 
 afterAll(async () => {
@@ -64,7 +60,7 @@ describe("resolvers -> Mutation -> createUserFamily", () => {
     } catch (error: any) {
       expect(spy).toHaveBeenCalledWith(USER_NOT_FOUND_ERROR.MESSAGE);
       expect(error.message).toEqual(
-        `Translated ${USER_NOT_FOUND_ERROR.MESSAGE}`
+        `Translated ${USER_NOT_FOUND_ERROR.MESSAGE}`,
       );
     }
   });
@@ -94,7 +90,7 @@ describe("resolvers -> Mutation -> createUserFamily", () => {
     } catch (error: any) {
       expect(spy).toHaveBeenCalledWith(USER_NOT_AUTHORIZED_SUPERADMIN.MESSAGE);
       expect(error.message).toEqual(
-        `${USER_NOT_AUTHORIZED_SUPERADMIN.MESSAGE}`
+        `${USER_NOT_AUTHORIZED_SUPERADMIN.MESSAGE}`,
       );
     }
   });
@@ -123,10 +119,10 @@ describe("resolvers -> Mutation -> createUserFamily", () => {
       await createUserFamilyResolver?.({}, args, context);
     } catch (error: any) {
       expect(spy).toHaveBeenCalledWith(
-        `${LENGTH_VALIDATION_ERROR.MESSAGE} 256 characters in name`
+        `${LENGTH_VALIDATION_ERROR.MESSAGE} 256 characters in name`,
       );
       expect(error.message).toEqual(
-        `${LENGTH_VALIDATION_ERROR.MESSAGE} 256 characters in name`
+        `${LENGTH_VALIDATION_ERROR.MESSAGE} 256 characters in name`,
       );
     }
   });
@@ -155,49 +151,10 @@ describe("resolvers -> Mutation -> createUserFamily", () => {
       await createUserFamilyResolver?.({}, args, context);
     } catch (error: any) {
       expect(spy).toHaveBeenCalledWith(
-        USER_FAMILY_MIN_MEMBERS_ERROR_CODE.MESSAGE
+        USER_FAMILY_MIN_MEMBERS_ERROR_CODE.MESSAGE,
       );
       expect(error.code).toEqual(USER_FAMILY_MIN_MEMBERS_ERROR_CODE.MESSAGE);
     }
-  });
-
-  it(`Updated the User to contain user Family`, async () => {
-    const args: MutationCreateUserFamilyArgs = {
-      data: {
-        title: "title",
-        userIds: [testUser?._id, testUser2?._id],
-      },
-    };
-
-    const context = {
-      userId: testUser?.id,
-    };
-
-    const { createUserFamily: createUserFamilyResolver } = await import(
-      "../../../src/resolvers/Mutation/createUserFamily"
-    );
-
-    const createUserFamilyPayload = await createUserFamilyResolver?.(
-      {},
-      args,
-      context
-    );
-
-    const updatedUsers = await User.find({
-      _id: { $in: [testUser?._id, testUser2?._id] },
-    });
-
-    updatedUsers.forEach((user) => {
-      expect(user.joinedUserFamily).toContainEqual(
-        createUserFamilyPayload?._id
-      );
-    });
-    expect(updatedUsers[0].createdUserFamily).toContainEqual(
-      createUserFamilyPayload?._id
-    );
-    expect(updatedUsers[0].adminForUserFamily).toContainEqual(
-      createUserFamilyPayload?._id
-    );
   });
 
   it(`creates the user Family and returns it`, async () => {
@@ -219,13 +176,13 @@ describe("resolvers -> Mutation -> createUserFamily", () => {
     const createUserFamilyPayload = await createUserFamilyResolver?.(
       {},
       args,
-      context
+      context,
     );
 
     expect(createUserFamilyPayload).toEqual(
       expect.objectContaining({
         title: "title",
-      })
+      }),
     );
   });
 });

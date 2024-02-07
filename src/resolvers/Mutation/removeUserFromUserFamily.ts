@@ -41,12 +41,12 @@ export const removeUserFromUserFamily: MutationResolvers["removeUserFromUserFami
       throw new errors.NotFoundError(
         requestContext.translate(USER_NOT_FOUND_ERROR.MESSAGE),
         USER_NOT_FOUND_ERROR.CODE,
-        USER_NOT_FOUND_ERROR.PARAM
+        USER_NOT_FOUND_ERROR.PARAM,
       );
     }
 
     const userIsMemberOfUserFamily = userFamily?.users.some((member) => {
-      Types.ObjectId(member).equals(user?._id);
+      return Types.ObjectId(member).equals(user?._id);
     });
 
     const userIdUserFamilyAdmin = userFamily?.admins.some((admin) => {
@@ -58,7 +58,7 @@ export const removeUserFromUserFamily: MutationResolvers["removeUserFromUserFami
       throw new errors.NotFoundError(
         requestContext.translate(USER_FAMILY_NOT_FOUND_ERROR.MESSAGE),
         USER_FAMILY_NOT_FOUND_ERROR.CODE,
-        USER_FAMILY_NOT_FOUND_ERROR.PARAM
+        USER_FAMILY_NOT_FOUND_ERROR.PARAM,
       );
     }
 
@@ -70,7 +70,7 @@ export const removeUserFromUserFamily: MutationResolvers["removeUserFromUserFami
       throw new errors.NotFoundError(
         requestContext.translate(USER_NOT_FOUND_ERROR.MESSAGE),
         USER_NOT_FOUND_ERROR.CODE,
-        USER_NOT_FOUND_ERROR.PARAM
+        USER_NOT_FOUND_ERROR.PARAM,
       );
     }
 
@@ -79,7 +79,7 @@ export const removeUserFromUserFamily: MutationResolvers["removeUserFromUserFami
       throw new errors.ConflictError(
         requestContext.translate(USER_REMOVING_SELF.MESSAGE),
         USER_REMOVING_SELF.CODE,
-        USER_REMOVING_SELF.PARAM
+        USER_REMOVING_SELF.PARAM,
       );
     }
 
@@ -91,7 +91,7 @@ export const removeUserFromUserFamily: MutationResolvers["removeUserFromUserFami
       throw new errors.ConflictError(
         requestContext.translate(ADMIN_REMOVING_ADMIN.MESSAGE),
         ADMIN_REMOVING_ADMIN.CODE,
-        ADMIN_REMOVING_ADMIN.PARAM
+        ADMIN_REMOVING_ADMIN.PARAM,
       );
     }
 
@@ -106,23 +106,9 @@ export const removeUserFromUserFamily: MutationResolvers["removeUserFromUserFami
       throw new errors.UnauthorizedError(
         requestContext.translate(ADMIN_REMOVING_CREATOR.MESSAGE),
         ADMIN_REMOVING_CREATOR.CODE,
-        ADMIN_REMOVING_CREATOR.PARAM
+        ADMIN_REMOVING_CREATOR.PARAM,
       );
     }
-
-    //Removes familyId from user joined families.
-    await User.findOneAndUpdate(
-      {
-        _id: args.userId,
-      },
-      {
-        $set: {
-          joinedUserFamily: currentUser?.joinedUserFamily.filter(
-            (userFamily) => userFamily.toString() !== args.familyId.toString()
-          ),
-        },
-      }
-    );
 
     //Removes args.userId from users list of user family ans return the updated family.
     return await UserFamily.findOneAndUpdate(
@@ -132,12 +118,12 @@ export const removeUserFromUserFamily: MutationResolvers["removeUserFromUserFami
       {
         $set: {
           users: userFamily.users.filter(
-            (user) => user.toString() !== args.userId.toString()
+            (user) => user.toString() !== args.userId.toString(),
           ),
         },
       },
       {
         new: true,
-      }
+      },
     ).lean();
   };
