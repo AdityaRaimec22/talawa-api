@@ -23,7 +23,7 @@ import { superAdminCheck } from "../../utilities";
 export const createUserFamily: MutationResolvers["createUserFamily"] = async (
   _parent,
   args,
-  context
+  context,
 ) => {
   const currentUser = await User.findById({
     _id: context.userId,
@@ -34,7 +34,7 @@ export const createUserFamily: MutationResolvers["createUserFamily"] = async (
     throw new errors.NotFoundError(
       requestContext.translate(USER_NOT_FOUND_ERROR.MESSAGE),
       USER_NOT_FOUND_ERROR.CODE,
-      USER_NOT_FOUND_ERROR.PARAM
+      USER_NOT_FOUND_ERROR.PARAM,
     );
   }
 
@@ -52,9 +52,9 @@ export const createUserFamily: MutationResolvers["createUserFamily"] = async (
   if (!ValidationResultName.isLessThanMaxLength) {
     throw new errors.InputValidationError(
       requestContext.translate(
-        `${LENGTH_VALIDATION_ERROR.MESSAGE} 256 characters in name`
+        `${LENGTH_VALIDATION_ERROR.MESSAGE} 256 characters in name`,
       ),
-      LENGTH_VALIDATION_ERROR.CODE
+      LENGTH_VALIDATION_ERROR.CODE,
     );
   }
 
@@ -63,7 +63,7 @@ export const createUserFamily: MutationResolvers["createUserFamily"] = async (
     throw new errors.InputValidationError(
       requestContext.translate(USER_FAMILY_MIN_MEMBERS_ERROR_CODE.MESSAGE),
       USER_FAMILY_MIN_MEMBERS_ERROR_CODE.CODE,
-      USER_FAMILY_MIN_MEMBERS_ERROR_CODE.PARAM
+      USER_FAMILY_MIN_MEMBERS_ERROR_CODE.PARAM,
     );
   }
 
@@ -76,30 +76,6 @@ export const createUserFamily: MutationResolvers["createUserFamily"] = async (
     admins: [context.userId],
     creator: context.userId,
   });
-
-  await User.findOneAndUpdate(
-    {
-      _id: context.userId,
-    },
-    {
-      $push: {
-        adminForUserFamily: createdUserFamily,
-        joinedUserFamily: createdUserFamily,
-        createdUserFamily: createdUserFamily,
-      },
-    }
-  );
-
-  await User.updateMany(
-    {
-      _id: { $in: args.data.userIds },
-    },
-    {
-      $push: {
-        joinedUserFamily: createdUserFamily,
-      },
-    }
-  );
 
   return createdUserFamily.toObject();
 };

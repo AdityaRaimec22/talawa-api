@@ -36,7 +36,7 @@ export const addUserToUserFamily: MutationResolvers["addUserToUserFamily"] =
       throw new errors.NotFoundError(
         requestContext.translate(USER_NOT_FOUND_ERROR.MESSAGE),
         USER_NOT_FOUND_ERROR.CODE,
-        USER_NOT_FOUND_ERROR.PARAM
+        USER_NOT_FOUND_ERROR.PARAM,
       );
     }
 
@@ -45,7 +45,7 @@ export const addUserToUserFamily: MutationResolvers["addUserToUserFamily"] =
       throw new errors.NotFoundError(
         requestContext.translate(USER_FAMILY_NOT_FOUND_ERROR.MESSAGE),
         USER_FAMILY_NOT_FOUND_ERROR.CODE,
-        USER_FAMILY_NOT_FOUND_ERROR.PARAM
+        USER_FAMILY_NOT_FOUND_ERROR.PARAM,
       );
     }
 
@@ -57,24 +57,13 @@ export const addUserToUserFamily: MutationResolvers["addUserToUserFamily"] =
     });
 
     // Checks whether user with _id === args.userId is already a member of Family.
-    if (isUserMemberOfUserFamily === true) {
+    if (isUserMemberOfUserFamily) {
       throw new errors.ConflictError(
         requestContext.translate(USER_ALREADY_MEMBER_ERROR.MESSAGE),
         USER_ALREADY_MEMBER_ERROR.CODE,
-        USER_ALREADY_MEMBER_ERROR.PARAM
+        USER_ALREADY_MEMBER_ERROR.PARAM,
       );
     }
-    //Adds args.familyId to userJoinedFamily
-    await User.findOneAndUpdate(
-      {
-        _id: args.userId,
-      },
-      {
-        $push: {
-          joinedUserFamily: args.familyId,
-        },
-      }
-    );
 
     // Adds args.userId to users lists on family group and return the updated family.
     return await UserFamily.findOneAndUpdate(
@@ -88,6 +77,6 @@ export const addUserToUserFamily: MutationResolvers["addUserToUserFamily"] =
       },
       {
         new: true,
-      }
+      },
     ).lean();
   };

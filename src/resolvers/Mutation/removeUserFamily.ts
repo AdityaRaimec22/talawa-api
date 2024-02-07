@@ -11,15 +11,16 @@ import { superAdminCheck } from "../../utilities";
  * This function enables to remove a user family.
  * @param _parent - parent of current request
  * @param args - payload provided with the request
- * @context The following checks are done:
- * 1. If the user family exists
+ * @param context - context of entire application.
+ * @remarks - The following checks are done:
+ * 1. If the user family exists.
  * 2. If the user is super admin.
  * @returns Deleted user family.
  */
 export const removeUserFamily: MutationResolvers["removeUserFamily"] = async (
   _parent,
   args,
-  context
+  context,
 ) => {
   const userFamily = await UserFamily.findOne({
     _id: args.familyId,
@@ -34,7 +35,7 @@ export const removeUserFamily: MutationResolvers["removeUserFamily"] = async (
     throw new errors.NotFoundError(
       requestContext.translate(USER_NOT_FOUND_ERROR.MESSAGE),
       USER_NOT_FOUND_ERROR.CODE,
-      USER_NOT_FOUND_ERROR.PARAM
+      USER_NOT_FOUND_ERROR.PARAM,
     );
   }
 
@@ -46,27 +47,9 @@ export const removeUserFamily: MutationResolvers["removeUserFamily"] = async (
     throw new errors.NotFoundError(
       requestContext.translate(USER_FAMILY_NOT_FOUND_ERROR.MESSAGE),
       USER_FAMILY_NOT_FOUND_ERROR.CODE,
-      USER_FAMILY_NOT_FOUND_ERROR.PARAM
+      USER_FAMILY_NOT_FOUND_ERROR.PARAM,
     );
   }
-
-  // Update user documents to remove familyId from relevant fields
-  await User.updateMany(
-    {
-      $or: [
-        { createdOrganizations: args.familyId },
-        { joinedOrganizations: args.familyId },
-        { adminForUserFamily: args.familyId },
-      ],
-    },
-    {
-      $pull: {
-        createdOrganizations: args.familyId,
-        joinedOrganizations: args.familyId,
-        adminForUserFamily: args.familyId,
-      },
-    }
-  );
 
   // Deletes the UserFamily.
   await UserFamily.deleteOne({

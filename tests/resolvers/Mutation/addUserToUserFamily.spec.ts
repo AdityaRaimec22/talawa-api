@@ -11,10 +11,12 @@ import {
   USER_FAMILY_NOT_FOUND_ERROR,
 } from "../../../src/constants";
 import { beforeAll, afterAll, describe, it, expect, vi } from "vitest";
-import type { TestUserType } from "../../helpers/userAndUserFamily";
-import type { TestUserFamilyType } from "../../helpers/userAndUserFamily";
+import type {
+  TestUserType,
+  TestUserFamilyType,
+} from "../../helpers/userAndUserFamily";
+
 import { createTestUserAndUserFamily } from "../../helpers/userAndUserFamily";
-import { User } from "../../../src/models";
 
 let testUser: TestUserType;
 let testUserFamily: TestUserFamilyType;
@@ -53,7 +55,7 @@ describe("resolver -> mutation -> addUserToUserFamily", () => {
       };
 
       const { addUserToUserFamily } = await import(
-        "../../../src/resolvers/Mutation/adminAddMemberToUserFamily"
+        "../../../src/resolvers/Mutation/addUserToUserFamily"
       );
       await addUserToUserFamily?.({}, args, context);
     } catch (error: any) {
@@ -78,7 +80,7 @@ describe("resolver -> mutation -> addUserToUserFamily", () => {
       };
 
       const { addUserToUserFamily } = await import(
-        "../../../src/resolvers/Mutation/adminAddMemberToUserFamily"
+        "../../../src/resolvers/Mutation/addUserToUserFamily"
       );
       await addUserToUserFamily?.({}, args, context);
     } catch (error: any) {
@@ -104,7 +106,7 @@ describe("resolver -> mutation -> addUserToUserFamily", () => {
       };
 
       const { addUserToUserFamily } = await import(
-        "../../../src/resolvers/Mutation/adminAddMemberToUserFamily"
+        "../../../src/resolvers/Mutation/addUserToUserFamily"
       );
       await addUserToUserFamily?.({}, args, context);
     } catch (error: any) {
@@ -122,18 +124,7 @@ describe("resolver -> mutation -> addUserToUserFamily", () => {
         $set: {
           users: [],
         },
-      }
-    );
-
-    await User.updateOne(
-      {
-        _id: testUser?._id,
       },
-      {
-        $addToSet: {
-          joinedUserFamily: testUserFamily?._id,
-        },
-      }
     );
 
     const args: MutationAddUserToUserFamilyArgs = {
@@ -146,12 +137,12 @@ describe("resolver -> mutation -> addUserToUserFamily", () => {
     };
 
     const { addUserToUserFamily } = await import(
-      "../../../src/resolvers/Mutation/adminAddMemberToUserFamily"
+      "../../../src/resolvers/Mutation/addUserToUserFamily"
     );
     const addUserToUserFamilyPayload = await addUserToUserFamily?.(
       {},
       args,
-      context
+      context,
     );
     expect(addUserToUserFamilyPayload?._id).toEqual(testUserFamily?._id);
     expect(addUserToUserFamilyPayload?.users).toEqual([testUser?._id]);

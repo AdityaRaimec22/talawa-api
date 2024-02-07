@@ -15,11 +15,11 @@ import {
   USER_REMOVING_SELF,
 } from "../../../src/constants";
 import { beforeAll, afterAll, describe, it, expect, vi } from "vitest";
-import {
-  createTestUserFunc,
-  type TestUserType,
+import { createTestUserFunc } from "../../helpers/userAndUserFamily";
+import type {
+  TestUserFamilyType,
+  TestUserType,
 } from "../../helpers/userAndUserFamily";
-import type { TestUserFamilyType } from "../../helpers/userAndUserFamily";
 
 let MONGOOSE_INSTANCE: typeof mongoose;
 let testUsers: TestUserType[];
@@ -44,30 +44,6 @@ beforeAll(async () => {
     admins: [testUsers[2]?._id, testUsers[1]?._id],
     creator: testUsers[2]?._id,
   });
-
-  await User.updateOne(
-    {
-      _id: testUsers[2]?._id,
-    },
-    {
-      $push: {
-        joinedUserFamily: testUserFamily._id,
-        adminForUserFamily: testUserFamily._id,
-        createdUserFamily: testUserFamily._id,
-      },
-    }
-  );
-
-  await User.updateMany(
-    {
-      _id: { $in: [testUsers[0]?._id, testUsers[1]?._id, testUsers[4]?._id] },
-    },
-    {
-      $push: {
-        joinedUserFamily: testUserFamily._id,
-      },
-    }
-  );
 });
 
 afterAll(async () => {
@@ -92,14 +68,14 @@ describe("resolver -> Mutation -> removerUserFromUserFamily", () => {
 
       const { removeUserFromUserFamily: removeUserFromUserFamilyResolver } =
         await import(
-          "../../../src/resolvers/Mutation/adminRemoveMemberFromUserFamily"
+          "../../../src/resolvers/Mutation/removeUserFromUserFamily"
         );
 
       await removeUserFromUserFamilyResolver?.({}, args, context);
     } catch (error: any) {
       expect(spy).toHaveBeenCalledWith(USER_NOT_FOUND_ERROR.MESSAGE);
       expect(error.message).toEqual(
-        `Translated ${USER_NOT_FOUND_ERROR.MESSAGE}`
+        `Translated ${USER_NOT_FOUND_ERROR.MESSAGE}`,
       );
     }
   });
@@ -121,7 +97,7 @@ describe("resolver -> Mutation -> removerUserFromUserFamily", () => {
 
       const { removeUserFromUserFamily: removeUserFromUserFamilyResolver } =
         await import(
-          "../../../src/resolvers/Mutation/adminRemoveMemberFromUserFamily"
+          "../../../src/resolvers/Mutation/removeUserFromUserFamily"
         );
 
       await removeUserFromUserFamilyResolver?.({}, args, context);
@@ -149,7 +125,7 @@ describe("resolver -> Mutation -> removerUserFromUserFamily", () => {
 
       const { removeUserFromUserFamily: removeUserFromUserFamilyResolver } =
         await import(
-          "../../../src/resolvers/Mutation/adminRemoveMemberFromUserFamily"
+          "../../../src/resolvers/Mutation/removeUserFromUserFamily"
         );
 
       await removeUserFromUserFamilyResolver?.({}, args, context);
@@ -176,14 +152,14 @@ describe("resolver -> Mutation -> removerUserFromUserFamily", () => {
 
       const { removeUserFromUserFamily: removeUserFromUserFamilyResolver } =
         await import(
-          "../../../src/resolvers/Mutation/adminRemoveMemberFromUserFamily"
+          "../../../src/resolvers/Mutation/removeUserFromUserFamily"
         );
 
       await removeUserFromUserFamilyResolver?.({}, args, context);
     } catch (error: any) {
       expect(spy).toHaveBeenCalledWith(USER_NOT_FOUND_ERROR.MESSAGE);
       expect(error.message).toEqual(
-        `Translated ${USER_NOT_FOUND_ERROR.MESSAGE}`
+        `Translated ${USER_NOT_FOUND_ERROR.MESSAGE}`,
       );
     }
   });
@@ -205,15 +181,13 @@ describe("resolver -> Mutation -> removerUserFromUserFamily", () => {
 
       const { removeUserFromUserFamily: removeUserFromUserFamilyResolver } =
         await import(
-          "../../../src/resolvers/Mutation/adminRemoveMemberFromUserFamily"
+          "../../../src/resolvers/Mutation/removeUserFromUserFamily"
         );
 
       await removeUserFromUserFamilyResolver?.({}, args, context);
     } catch (error: any) {
-      expect(spy).toHaveBeenCalledWith(USER_NOT_FOUND_ERROR.MESSAGE);
-      expect(error.message).toEqual(
-        `Translated ${USER_NOT_FOUND_ERROR.MESSAGE}`
-      );
+      expect(spy).toHaveBeenCalledWith(USER_REMOVING_SELF.MESSAGE);
+      expect(error.message).toEqual(`Translated ${USER_REMOVING_SELF.MESSAGE}`);
     }
   });
 
@@ -234,14 +208,14 @@ describe("resolver -> Mutation -> removerUserFromUserFamily", () => {
 
       const { removeUserFromUserFamily: removeUserFromUserFamilyResolver } =
         await import(
-          "../../../src/resolvers/Mutation/adminRemoveMemberFromUserFamily"
+          "../../../src/resolvers/Mutation/removeUserFromUserFamily"
         );
 
       await removeUserFromUserFamilyResolver?.({}, args, context);
     } catch (error: any) {
       expect(spy).toHaveBeenCalledWith(USER_NOT_FOUND_ERROR.MESSAGE);
       expect(error.message).toEqual(
-        `Translated ${USER_NOT_FOUND_ERROR.MESSAGE}`
+        `Translated ${USER_NOT_FOUND_ERROR.MESSAGE}`,
       );
     }
   });
@@ -263,14 +237,14 @@ describe("resolver -> Mutation -> removerUserFromUserFamily", () => {
 
       const { removeUserFromUserFamily: removeUserFromUserFamilyResolver } =
         await import(
-          "../../../src/resolvers/Mutation/adminRemoveMemberFromUserFamily"
+          "../../../src/resolvers/Mutation/removeUserFromUserFamily"
         );
 
       await removeUserFromUserFamilyResolver?.({}, args, context);
     } catch (error: any) {
-      expect(spy).toHaveBeenCalledWith(USER_NOT_FOUND_ERROR.MESSAGE);
+      expect(spy).toHaveBeenCalledWith(ADMIN_REMOVING_CREATOR.MESSAGE);
       expect(error.message).toEqual(
-        `Translated ${USER_NOT_FOUND_ERROR.MESSAGE}`
+        `Translated ${ADMIN_REMOVING_CREATOR.MESSAGE}`,
       );
     }
   });
@@ -292,25 +266,20 @@ describe("resolver -> Mutation -> removerUserFromUserFamily", () => {
 
       const { removeUserFromUserFamily: removeUserFromUserFamilyResolver } =
         await import(
-          "../../../src/resolvers/Mutation/adminRemoveMemberFromUserFamily"
+          "../../../src/resolvers/Mutation/removeUserFromUserFamily"
         );
 
       const updatedUserFamily = await removeUserFromUserFamilyResolver?.(
         {},
         args,
-        context
+        context,
       );
 
-      const removedUser = await User.findOne({
-        _id: testUsers[4]?.id,
-      });
-
       expect(updatedUserFamily?.users).not.toContain(testUsers[4]?._id);
-      expect(removedUser?.joinedUserFamily).not.toContain(testUserFamily?._id);
     } catch (error: any) {
       expect(spy).toHaveBeenCalledWith(USER_NOT_FOUND_ERROR.MESSAGE);
       expect(error.message).toEqual(
-        `Translated ${USER_NOT_FOUND_ERROR.MESSAGE}`
+        `Translated ${USER_NOT_FOUND_ERROR.MESSAGE}`,
       );
     }
   });
