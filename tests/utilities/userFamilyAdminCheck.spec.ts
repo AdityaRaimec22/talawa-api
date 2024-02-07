@@ -57,8 +57,8 @@ describe("utilities -> adminCheck", () => {
         testUser?._id,
         testUserFamily ?? ({} as InterfaceUserFamily)
       );
-    } catch (error: any) {
-      expect(error.message).toEqual(
+    } catch (error) {
+      expect(error).toEqual(
         `Translated ${USER_NOT_AUTHORIZED_ADMIN.MESSAGE}`
       );
     }
