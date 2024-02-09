@@ -10,7 +10,7 @@
     "prod": "cross-env NODE_ENV=production pm2-runtime start ./build/server.js",
     "start": "cross-env pm2-runtime start ./build/server.js --watch",
     "setup": "tsx setup.ts",
-    "test": "vitest run --no-threads --coverage",
+    "test": "vitest run --coverage",
     "typecheck": "graphql-codegen && tsc --noEmit --pretty",
     "lint:check": "eslint . --max-warnings=1500",
     "lint:fix": "eslint . --fix",
@@ -135,7 +135,7 @@
     "rimraf": "^5.0.5",
     "tsx": "^4.7.0",
     "typescript": "^5.3.2",
-    "vitest": "^0.24.3"
+    "vitest": "^1.2.1"
   },
   "overrides": {
     "graphql-voyager": {
