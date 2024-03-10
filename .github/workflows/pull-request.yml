@@ -99,10 +99,7 @@ jobs:
       - name: Compare changes between Base branch and PR Head.
         id: changed-files-base
         run: |
-          git fetch origin $BASE_BRANCH
-          git checkout $BASE_BRANCH
-          python .github/workflows/check_files_submitted.py \
-            --base_branch $BASE_BRANCH --pr_branch pr-branch
+          python3 .github/workflows/check_files.py --base_branch "${{ github.base_ref }}" --pr_branch "${{ github.head_ref }}" --sensitive_files .github/workflows/sensitive_files.txt --verbose
 
   Test-Application:
     name: Testing Application
