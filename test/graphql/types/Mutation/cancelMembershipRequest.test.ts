@@ -14,7 +14,7 @@ import {
 	Query_signIn,
 } from "../documentNodes";
 
-/** Helper to create an organization */
+/** Helper to create an organization ki mkc*/
 async function createTestOrganization() {
 	const signInResult = await mercuriusClient.query(Query_signIn, {
 		variables: {
